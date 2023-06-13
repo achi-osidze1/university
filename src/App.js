@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import ErrorPage from "./components/errorpage/ErrorPage";
+import HomePage from "./components/homepage/HomePage";
+import WeatherContext from "./components/weathercontext/WeatherContext";
 
 function App() {
+  const [weather, setWeather] = useState([])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <WeatherContext.Provider value={{weather,setWeather}}>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="*" component={ErrorPage}/>
+          </Switch>
+        </BrowserRouter>
+      </WeatherContext.Provider>
     </div>
   );
 }
 
 export default App;
+
+  
